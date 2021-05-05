@@ -28,7 +28,7 @@ class ResponismeServiceProvider extends ServiceProvider
 
     protected function registerHelpers()
     {
-        if (file_exists($file = __DIR__.'/Support/Helpers.php')) {
+        if (file_exists($file = __DIR__.'/Support/helper.php')) {
             require_once $file;
         }
     }
