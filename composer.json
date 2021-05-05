@@ -13,10 +13,7 @@
     "autoload": {
         "psr-4": {
             "Att\\Responisme\\": "src/"
-        },
-        "files": [
-            "src/Support/helpers.php"
-        ]
+        }
     },
     "require": {},
     "extra": {
