@@ -1,6 +1,6 @@
 <?php
 
-namespace Att\StarterKit\Support;
+namespace Att\Responisme\Support;
 
 class Responisme
 {

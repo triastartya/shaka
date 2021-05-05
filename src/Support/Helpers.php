@@ -1,7 +1,7 @@
 <?php
 
-use Att\StarterKit\Exceptions\StarterKitException;
-use Att\StarterKit\Support\Responisme;
+use Att\Responisme\Exceptions\StarterKitException;
+use Att\Responisme\Support\Responisme;
 use Illuminate\Support\Facades\Validator;
 
 if (! function_exists('_validate')) {
