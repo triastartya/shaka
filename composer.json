@@ -1,0 +1,29 @@
+{
+    "name": "att/responisme",
+    "description": "Standart format for response it att group",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Team",
+            "email": "it@attgroup.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-4": {
+            "Att\\Responisme\\": "src/"
+        },
+        "files": [
+            "src/Support/helpers.php"
+        ]
+    },
+    "require": {},
+    "extra": {
+      "laravel": {
+        "providers": [
+          "Att\\Responisme\\ResponismeServiceProvider"
+        ]
+      }
+    }
+}
