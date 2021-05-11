@@ -26,7 +26,7 @@ class StarterKitException extends Exception
 
     public function withData($data)
     {
-        if ($data instanceof \Throwable) {
+        if ($data instanceof \Throwable || $data instanceof \Exception) {
             $this->data = [
                 'error' => $data->getMessage(),
             ];
