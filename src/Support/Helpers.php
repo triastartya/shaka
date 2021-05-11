@@ -37,6 +37,8 @@ if (! function_exists('transMessageException')) {
     {         
         if ($exception instanceof \Illuminate\Database\QueryException) {
             return $exception->getPrevious()->errorInfo[2];
+        }elseif($exception instanceof \Exception){
+            return $exception->getMessage();
         }else{
             if ($exception instanceof \Throwable) {
                 if ($exception->getCode() === 0) {
