@@ -36,7 +36,9 @@ class StarterKitException extends Exception
                     'file'  => $data->getFile(),
                     'line'  => $data->getLine(),
                     'code'  => $data->getCode(),
-                    'trace' => $data->getTrace(),
+                    'trace' => collect($data->getTrace())->map(function($value){
+                        return collect($value)->except(['args']);
+                    })
                 ]);
             }
                         
