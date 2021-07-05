@@ -5,6 +5,7 @@ namespace Att\Responisme;
 use Att\Responisme\Middleware\ValidateUser;
 use Att\Responisme\Middleware\ValidateUserPermissions;
 use Att\Responisme\Middleware\ValidateUserRoles;
+use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;
 
 class ResponismeServiceProvider extends ServiceProvider
