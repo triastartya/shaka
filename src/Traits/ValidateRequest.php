@@ -10,12 +10,12 @@ use Illuminate\Http\Request;
  */
 trait ValidateRequest
 {
-    public function makeValidating(Request $request)
+    public function makeValidating()
     {
         try {
-            return response()->json(array_merge($request->user()->toArray(), [
-                'permissions' => $request->user()->getAllPermissions()->toArray(),
-                'roles'       => $request->user()->getRoleNames()->toArray()
+            return response()->json(array_merge(request()->user()->toArray(), [
+                'permissions' => request()->user()->getAllPermissions()->toArray(),
+                'roles'       => request()->user()->getRoleNames()->toArray()
             ]));
         } catch (\Throwable $th) {
             throw (new StarterKitException(transMessageException($th)));
