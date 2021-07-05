@@ -23,15 +23,15 @@ trait ConnectService
         $http = Http::acceptJson()
             ->withHeaders(['Accept' => 'application/json', 'Authorization' => request()->header('authorization')]);
 
-        if ($method === null || $method === 'GET') {
+        if ($method === null || strtolower($method) === 'GET') {
             return $http->get($url, array_merge($data ?? [], ['auth_user_kong' => request('auth_user_kong')]))->json();                        
-        }elseif( $method === 'POST'){
+        }elseif( strtolower($method) === 'POST'){
             return $http->post($url, array_merge($data ?? [], ['auth_user_kong' => request('auth_user_kong')]))->json();  
-        }elseif( $method === 'PUT'){
+        }elseif( strtolower($method) === 'PUT'){
             return $http->put($url, array_merge($data ?? [], ['auth_user_kong' => request('auth_user_kong')]))->json();  
-        }elseif( $method === 'PATCH'){
+        }elseif( strtolower($method) === 'PATCH'){
             return $http->patch($url, array_merge($data ?? [], ['auth_user_kong' => request('auth_user_kong')]))->json();  
-        }elseif( $method === "DELETE"){
+        }elseif( strtolower($method) === "DELETE"){
             return $http->delete($url, array_merge($data ?? [], ['auth_user_kong' => request('auth_user_kong')]))->json();  
         }
     }
