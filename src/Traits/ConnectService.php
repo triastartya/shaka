@@ -23,6 +23,7 @@ trait ConnectService
         }
 
         $http = Http::acceptJson()
+            ->retry(1,1)
             ->timeout($this->timeout)
             ->withHeaders(['Accept' => 'application/json', 'Authorization' => request()->header('authorization')]);
 
