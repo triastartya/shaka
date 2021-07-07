@@ -16,6 +16,7 @@ trait ConnectService
 {
     protected $timeout = 3;
     protected $expireAt = 60; //in second
+    protected $redis = true;
 
     public function callService($url, $method = null, $data = [])
     {
@@ -26,11 +27,13 @@ trait ConnectService
             ]);
         }
 
-        $key = $url.($method ?? 'GET');
-        $cache = Redis::get($key);
+        if ($this->redis) {
+            $key = $url.($method ?? 'GET').json_encode($data);
+            $cache = Redis::get($key);
 
-        if (!empty($cache)) {
-            return json_decode($cache);
+            if (!empty($cache)) {
+                return json_decode($cache);
+            }
         }
 
         $http = Http::acceptJson()
@@ -40,20 +43,12 @@ trait ConnectService
 
         $method = strtolower($method ?? 'get');
         $response = $http->$method($url, array_merge($data , ['auth_user_kong' => request('auth_user_kong')]))->json();                        
-        $this->setRedis($key, $response);
+        
+        if ($this->redis) {
+            $this->setRedis($key, $response);
+        }
 
-        return $response;
-        // if ($method === null || strtoupper($method) === 'GET') {
-        //     return $http->get($url, array_merge($data ?? [], ['auth_user_kong' => request('auth_user_kong')]))->json();                        
-        // }elseif( strtoupper($method) === 'POST'){
-        //     return $http->post($url, array_merge($data ?? [], ['auth_user_kong' => request('auth_user_kong')]))->json();  
-        // }elseif( strtoupper($method) === 'PUT'){
-        //     return $http->put($url, array_merge($data ?? [], ['auth_user_kong' => request('auth_user_kong')]))->json();  
-        // }elseif( strtoupper($method) === 'PATCH'){
-        //     return $http->patch($url, array_merge($data ?? [], ['auth_user_kong' => request('auth_user_kong')]))->json();  
-        // }elseif( strtoupper($method) === "DELETE"){
-        //     return $http->delete($url, array_merge($data ?? [], ['auth_user_kong' => request('auth_user_kong')]))->json();  
-        // }
+        return $response;        
     }
 
     public function timeout($second = 3)
@@ -72,6 +67,20 @@ trait ConnectService
     public function expireAt($second = 60)
     {
         $this->expireAt = $second;
+
+        return $this;
+    }
+
+    public function enableRedis()
+    {
+        $this->redis = true;
+
+        return $this;
+    }
+
+    public function disableRedis()
+    {
+        $this->redis = false;
 
         return $this;
     }
