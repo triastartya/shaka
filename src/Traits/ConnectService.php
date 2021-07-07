@@ -27,10 +27,10 @@ trait ConnectService
         }
 
         $key = $url.($method ?? 'GET');
-        $data = Redis::get($key);
+        $cache = Redis::get($key);
 
-        if (!empty($data) && !isNull($data)) {
-            return json_decode($data);
+        if (!empty($cache)) {
+            return json_decode($cache);
         }
 
         $http = Http::acceptJson()
