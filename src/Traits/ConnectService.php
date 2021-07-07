@@ -17,7 +17,7 @@ trait ConnectService
     protected $timeout = 3;
     protected $expireAt = 60; //in second
 
-    public function callService($url, $method = null, $data = null)
+    public function callService($url, $method = null, $data = [])
     {
         if (empty($url)) {
             return response()->json([
@@ -39,7 +39,7 @@ trait ConnectService
             ->withHeaders(['Accept' => 'application/json', 'Authorization' => request()->header('authorization')]);
 
         $method = strtolower($method ?? 'get');
-        $response = $http->$method($url, array_merge($data ?? [], ['auth_user_kong' => request('auth_user_kong')]))->json();                        
+        $response = $http->$method($url, array_merge($data , ['auth_user_kong' => request('auth_user_kong')]))->json();                        
         $this->setRedis($key, $response);
 
         return $response;
