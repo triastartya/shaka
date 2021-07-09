@@ -3,6 +3,7 @@
 namespace Att\Responisme\Traits;
 
 use Att\Responisme\Exceptions\StarterKitException;
+use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Redis;
@@ -61,6 +62,10 @@ trait ConnectService
             }
 
             return $response;                       
+        } catch (ConnectionException $th) {
+            session()->flash($sessionKey, $th->getPrevious()->getHandlerContext()['error']);
+
+            return ['success' => false, 'message' => $th->getPrevious()->getHandlerContext()['error']];
         } catch (\Throwable $th) {
             session()->flash($sessionKey, $th->getMessage());
 
