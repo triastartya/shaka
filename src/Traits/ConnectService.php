@@ -18,7 +18,7 @@ trait ConnectService
     protected $expireAt = 60; //in seconds
     protected $redis = true;
 
-    public function callService($url, $method = null, $data = [])
+    public function callService($url = '', $method = null, $data = [])
     {
         if (empty($url)) {
             return ['success' => false, 'message' => 'Endpoint of service must be define'];
