@@ -21,7 +21,7 @@ trait ConnectService
     public function callService($url, $method = null, $data = [])
     {
         if (empty($url)) {
-            return responisme()->makeError('Endpoint of service must be define');
+            return ['success' => false, 'message' => 'Endpoint of service must be define'];
         }
 
         try {
@@ -41,7 +41,7 @@ trait ConnectService
         } catch (\Throwable $th) {
            $this->isHealthyService($th, false);
 
-           throw (new StarterKitException(transMessageException($th)));
+           return ['success' => false, 'message' => $th->getMessage()];
         }
                         
     }
@@ -72,13 +72,12 @@ trait ConnectService
 
         if ($status) {
             // if session exists mean service is down.
-            if (session()->has($sessionKey)){
-                return responisme()->makeError(session($sessionKey));
+            if (session()->has($sessionKey)){                
+                return ['success' => false, 'message' => session($sessionKey)];
             } 
         }else{
             session()->flash($sessionKey, $url->getMessage());
-        }
-                   
+        }                   
     }
 
     public function timeout($second = 3)
