@@ -24,60 +24,56 @@ trait ConnectService
             return ['success' => false, 'message' => 'Endpoint of service must be define'];
         }
 
-        try {
-            $this->isHealthyService($url);
-            
-            $key = $url.($method ?? 'GET').json_encode($data);
+        $key = $url.($method ?? 'GET').json_encode($data);
 
-            if ($this->redis) {                
-                $cache = Redis::get($key);
-    
-                if (!empty($cache)) {
-                    return json_decode($cache);
-                }
+        if ($this->redis) {                
+            $cache = Redis::get($key);
+
+            if (!empty($cache)) {
+                return json_decode($cache);
             }
-
-            $this->sendRequest($url, $method, $data, $key);
-        } catch (\Throwable $th) {
-           $this->isHealthyService($th, false);
-
-           return ['success' => false, 'message' => $th->getMessage()];
         }
-                        
+
+        return $this->sendRequest($url, $method, $data, $key);                                
     }
 
     private function sendRequest($url, $method, $data, $key)
     {
-        $http = Http::acceptJson()
-            ->retry(1,1)
-            ->timeout($this->timeout)
-            ->withHeaders(['Accept' => 'application/json', 'Authorization' => request()->header('authorization')]);
+        try {
+            $sessionKey = $this->sessionKey($url);
 
-        $method = strtolower($method ?? 'get');
-
-        $response = $http->$method($url, array_merge($data , ['auth_user_kong' => request('auth_user_kong')]))->json();                        
-        
-        if ($this->redis) {
-            $this->setRedis($key, $response);
-        }
-
-        return $response;
-    }
-
-    private function isHealthyService($url, $status = true)
-    {
-        $parse = parse_url($url);
-
-        $sessionKey = ($parse['host'] ?? $url).($parse['port'] ?? '');
-
-        if ($status) {
-            // if session exists mean service is down.
+            // check service is up base on history request
             if (session()->has($sessionKey)){                
                 return ['success' => false, 'message' => session($sessionKey)];
             } 
-        }else{
-            session()->flash($sessionKey, $url->getMessage());
-        }                   
+
+            $http = Http::acceptJson()
+                ->retry(1,1)
+                ->timeout($this->timeout)
+                ->withHeaders(['Accept' => 'application/json', 'Authorization' => request()->header('authorization')]);
+
+            $method = strtolower($method ?? 'get');
+
+            $response = $http->$method($url, array_merge($data , ['auth_user_kong' => request('auth_user_kong')]))->json();                        
+            
+            if ($this->redis) {
+                $this->setRedis($key, $response);
+            }
+
+            return $response;                       
+        } catch (\Throwable $th) {
+            session()->flash($sessionKey, $th->getMessage());
+
+           return ['success' => false, 'message' => $th->getMessage()];
+        }
+        
+    }
+
+    private function sessionKey($url)
+    {
+        $parse = parse_url($url);
+
+        return ($parse['host'] ?? $url).($parse['port'] ?? '');
     }
 
     public function timeout($second = 3)
