@@ -6,8 +6,8 @@ Tambahkan repo `responisme` di `composer.json` :
     "repositories": {
         "att/responisme": {
               "type": "vcs",
-              "url": "https://gitlab.att.id/sofamh/responisme.git",              
-        },
+              "url": "https://gitlab.att.id/sofamh/responisme.git"             
+        }
      }
 ```
 Install `responisme` :
