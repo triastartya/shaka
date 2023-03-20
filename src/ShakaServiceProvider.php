@@ -1,14 +1,14 @@
 <?php
 
-namespace Att\Responisme;
+namespace Viershaka\Shaka;
 
-use Att\Responisme\Middleware\ValidateUser;
-use Att\Responisme\Middleware\ValidateUserPermissions;
-use Att\Responisme\Middleware\ValidateUserRoles;
+use Viershaka\Shaka\Middleware\ValidateUser;
+use Viershaka\Shaka\Middleware\ValidateUserPermissions;
+use Viershaka\Shaka\Middleware\ValidateUserRoles;
 use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;
 
-class ResponismeServiceProvider extends ServiceProvider
+class ShakaServiceProvider extends ServiceProvider
 {
     /**
      * Register services.

@@ -1,7 +1,7 @@
 <?php
 
-use Att\Responisme\Exceptions\StarterKitException;
-use Att\Responisme\Support\Responisme;
+use Viershaka\Shaka\Exceptions\StarterKitException;
+use Viershaka\Shaka\Support\Responisme;
 use Illuminate\Support\Facades\Validator;
 
 if (! function_exists('_validate')) {

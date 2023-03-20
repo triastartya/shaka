@@ -1,8 +1,8 @@
 <?php
 
-namespace Att\Responisme\Traits;
+namespace Viershaka\Shaka\Traits;
 
-use Att\Responisme\Exceptions\StarterKitException;
+use Viershaka\Shaka\Exceptions\StarterKitException;
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;

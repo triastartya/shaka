@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Att\Responisme\Exceptions\StarterKitException;
+use Viershaka\Shaka\Exceptions\StarterKitException;
 
 class ResponismeController extends Controller
 {

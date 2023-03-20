@@ -1,6 +1,6 @@
 <?php
 
-namespace Att\Responisme\Support;
+namespace Viershaka\Shaka\Support;
 
 class Responisme
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Att\Responisme\Exceptions;
+namespace Viershaka\Shaka\Exceptions;
 
 use Exception;
 

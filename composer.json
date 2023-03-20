@@ -1,27 +1,25 @@
 {
-    "name": "att/responisme",
-    "description": "Standart format for response it att group",
+    "name": "viershaka/shaka",
+    "description": "respon testing",
     "type": "library",
     "license": "MIT",
-    "authors": [
-        {
-            "name": "Team",
-            "email": "it@attgroup.com"
-        }
-    ],
-    "minimum-stability": "dev",
     "autoload": {
         "psr-4": {
-            "Att\\Responisme\\": "src/"
+            "Viershaka\\Shaka\\": "src/"
         }
     },
+    "authors": [
+        {
+            "name": "Vier Dan Shaka"
+        }
+    ],
     "require": {
-      "predis/predis": "^1.1"
-    },
+        "predis/predis": "^1.1"
+    },    
     "extra": {
       "laravel": {
         "providers": [
-          "Att\\Responisme\\ResponismeServiceProvider"
+          "Viershaka\\Shaka\\ShakaServiceProvider"
         ]
       }
     }

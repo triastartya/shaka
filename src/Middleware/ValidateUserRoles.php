@@ -1,6 +1,6 @@
 <?php
 
-namespace Att\Responisme\Middleware;
+namespace Viershaka\Shaka\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
