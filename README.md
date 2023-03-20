@@ -1,4 +1,4 @@
-# Package for Laravel
+<!-- # Package for Laravel
 
 ## Basic Usage
 Tambahkan repo `responisme` di `composer.json` :
@@ -76,4 +76,4 @@ Untuk mengatur `timeout` komunikasi antar service, bisa menggunakan method `time
         }
         
     }
-```
+``` -->
